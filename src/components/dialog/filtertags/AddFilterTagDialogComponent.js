@@ -9,6 +9,23 @@ class AddFilterTagDialogComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.submitHandler = this.submitHandler.bind(this);
+  }
+
+  submitHandler() {
+    let categories = [];
+    for(let i=1; i< 8;i++) {
+      if (this.refs[`button${i}`].isSelected()) {
+        categories.push(this.refs[`button${i}`].getName());
+      }
+    }
+
+    //HERE WE CALL THE WINDOW METHOD.
+    //window.something(categories)
+    //INSTEAD WE PRINT
+
+    console.log(categories);
+    this.props.cancelShow();
   }
 
   render() {
@@ -17,17 +34,17 @@ class AddFilterTagDialogComponent extends React.Component {
         <div className = "addfilterdialog-window">
           <div className = "addfilterdialog-title"> Select the tags you want to filter with
           <br/>
-          <SelectableButtonComponent icon = "crowd-icon" buttontext="Crowd" />
-          <SelectableButtonComponent icon = "hazard-icon" buttontext="Hazards" />
-          <SelectableButtonComponent icon = "events-icon" buttontext="Events" />
+          <SelectableButtonComponent name = "Crowd" ref = "button1" icon = "crowd-icon" buttontext="Crowd" />
+          <SelectableButtonComponent name = "Hazards" ref = "button2" icon = "hazard-icon" buttontext="Hazards" />
+          <SelectableButtonComponent name = "Events" ref = "button3" icon = "events-icon" buttontext="Events" />
           <br/>
-          <SelectableButtonComponent icon = "offers-icon" buttontext="Offers" />
-          <SelectableButtonComponent icon = "public-services-icon" buttontext="Public Services" />
-          <SelectableButtonComponent icon = "roads-icon" buttontext="Roads" />
+          <SelectableButtonComponent name = "Offers" ref = "button4" icon = "offers-icon" buttontext="Offers" />
+          <SelectableButtonComponent name = "PublicServices" ref = "button5" icon = "public-services-icon" buttontext="Public Services" />
+          <SelectableButtonComponent name = "Roads" ref = "button6" icon = "roads-icon" buttontext="Roads" />
           <br/>
-          <SelectableButtonComponent icon = "safety-icon" buttontext="Safety" />
+          <SelectableButtonComponent name = "Safety" ref = "button7" icon = "safety-icon" buttontext="Safety" />
           <br/>
-          <button className = "addfilterdialog-submit">Submit</button>
+          <button className = "addfilterdialog-submit" onClick = {this.submitHandler}>Submit</button>
           <button className = "addfilterdialog-cancel" onClick = {this.props.cancelShow}>Cancel</button>
           </div>
         </div>
