@@ -43,7 +43,7 @@ class AddTagDialogComponent extends React.Component {
     console.log(this.state.selectedcategory);
     console.log(subcategory);
     console.log(usertext);
-    this.props.onSubmit(this.state.selectedcategory, 'hello', subcategory, usertext);
+    this.props.onSubmit(this.state.selectedcategory, 'admin', subcategory, usertext);
   }
 
   render() {

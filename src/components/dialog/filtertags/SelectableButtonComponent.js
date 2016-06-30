@@ -14,10 +14,15 @@ class SelectableButtonComponent extends React.Component {
     this.select = this.select.bind(this);
     this.deselect = this.deselect.bind(this);
     this.isSelected = this.isSelected.bind(this);
+    this.getName = this.getName.bind(this);
   }
 
   select() {
     this.setState({ selected: true });
+  }
+
+  getName() {
+    return this.props.name;
   }
 
   deselect() {
@@ -49,6 +54,7 @@ SelectableButtonComponent.displayName = 'DialogFiltertagsSelectableButtonCompone
 SelectableButtonComponent.propTypes = {
   icon: React.PropTypes.string,
   buttontext: React.PropTypes.string,
+  name: React.PropTypes.string,
 };
 // SelectableButtonComponent.defaultProps = {};
 
