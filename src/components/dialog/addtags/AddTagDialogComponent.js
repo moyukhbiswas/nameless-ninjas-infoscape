@@ -16,7 +16,7 @@ class AddTagDialogComponent extends React.Component {
     };
 
     this.subcategories = [
-        ['Heavy Crowd', 'Medium Crowd', 'Empty'],
+        ['Heavy Crowd', 'Medium Crowd', 'Low Crowd'],
         ['Waterlogging', 'Pollution', 'Others'],
         ['Waterlogging', 'Pollution', 'Others'],
         ['Waterlogging', 'Pollution', 'Others'],

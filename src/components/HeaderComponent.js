@@ -9,7 +9,7 @@ class HeaderComponent extends React.Component {
   render() {
     return (
       <div className="header-component">
-        Logo Goes Here! :D
+        <div className = "logo">Infoscape</div>
         <FilterButtonComponent onFilterClick= {this.props.onFilterClick} />
       </div>
     );

@@ -13,7 +13,7 @@ class AppComponent extends React.Component {
     super(props);
     this.state = {
       displayFilterDialog: false,
-      displayAddDialog: false,
+      displayAddDialog: true,
     }
   }
 
