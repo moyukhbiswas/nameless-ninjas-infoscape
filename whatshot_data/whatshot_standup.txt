@@ -1,0 +1,1 @@
+[[u'Samahaara Theatre Club', u'5th Jun', [17.385044, 78.486671]], [u'Friday Comedy', u'1st Jul, 07:45pm', [17.4812063, 78.5517776]], [u'Rising Stars of Comedy', u'3rd Jul, 07:00pm', [17.385044, 78.486671]], [u'Monsoon Comedy Show', u'7th Jul, 08:00pm', [17.385044, 78.486671]], [u'Queer And Allies Art Festival', u'10th Jul, 12:00pm', [17.385044, 78.486671]]]
