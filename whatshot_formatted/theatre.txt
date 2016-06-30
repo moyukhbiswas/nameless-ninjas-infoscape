@@ -1,0 +1,7 @@
+[u'Samahaara Theatre Club', u'5th Jun', '[17.385044, 78.486671]']
+[u'Forget Hollywood', u'3rd Jul, 08:15pm', '[17.385044, 78.486671]']
+[u'Weekend Workshop', u'14th May', '[17.415234, 78.4490582]']
+[u'Swamy Kalyanam', u'3rd Jul, 06:30pm', '[17.4286626, 78.52784439999999]']
+[u'Titus Adronicus', u'3rd Jul, 07:00pm', '[17.4286626, 78.52784439999999]']
+[u'Raktbeej', u'9th Jul', '[17.385044, 78.486671]']
+[u'Wedding Album', u'9th Jul, 07:30pm', '[17.385044, 78.486671]']

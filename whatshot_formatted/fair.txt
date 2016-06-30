@@ -1,0 +1,2 @@
+[u'Organic Bazaar', u'3rd Jul', '[17.385044, 78.486671]']
+[u'The Indigo Collection', u'29th Jun', '[17.385044, 78.486671]']
