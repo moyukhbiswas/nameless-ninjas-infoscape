@@ -14,7 +14,7 @@ class AddTagDialogComponent extends React.Component {
       selectedcategory: 'None',
       currentIndex: 0,
     };
-
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
     this.subcategories = [
         ['Heavy Crowd', 'Medium Crowd', 'Low Crowd'],
         ['Waterlogging', 'Pollution', 'Others'],
@@ -31,6 +31,19 @@ class AddTagDialogComponent extends React.Component {
   clickHandler(name, index) {
     console.log(name);
     this.setState({showsecondscreen: true, selectedcategory: name, currentIndex: index});
+  }
+
+  handleSubmitClick() {
+    let e = document.getElementById("add-dialog-select");
+    let subcategory = e.options[e.selectedIndex].value;
+
+    let a = document.getElementById("add-dialog-text");
+    let usertext = a.value;
+
+    console.log(this.state.selectedcategory);
+    console.log(subcategory);
+    console.log(usertext);
+    this.props.onSubmit(this.state.selectedcategory, 'hello', subcategory, usertext);
   }
 
   render() {
@@ -66,9 +79,9 @@ class AddTagDialogComponent extends React.Component {
           <tr>
           <td>Select Subcategory:</td>
           <td>
-          <select className = "form-control">
+          <select id = "add-dialog-select" className = "form-control">
             {this.subcategories[this.state.currentIndex].map( element =>
-              <option value = "fdsf">{element}</option>
+              <option value = {element}>{element}</option>
             )}
           </select>
           </td>
@@ -76,13 +89,13 @@ class AddTagDialogComponent extends React.Component {
           <tr>
           <td>What is it about?:</td>
           <td><div className = "second-screen-select">
-            <textarea className="form-control" rows="5" id="comment"></textarea>
+            <textarea id = "add-dialog-text" className="form-control" rows="5"></textarea>
           </div></td>
           </tr>
           <tr>
           <td>
           </td>
-          <td>          <button className = "addfilterdialog-submit">Submit</button>
+          <td>          <button className = "addfilterdialog-submit" onClick = {this.handleSubmitClick}>Submit</button>
                     <button className = "addfilterdialog-cancel" onClick = {this.props.cancelShow}>Cancel</button>
           </td>
           </tr>
@@ -101,6 +114,7 @@ AddTagDialogComponent.displayName = 'DialogAddtagsAddTagDialogComponent';
 // Uncomment properties you need
 AddTagDialogComponent.propTypes = {
   cancelShow: React.PropTypes.func,
+  onSubmit: React.PropTypes.func,
 };
 // AddTagDialogComponent.defaultProps = {};
 

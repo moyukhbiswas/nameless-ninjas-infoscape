@@ -6,6 +6,7 @@ import HeaderComponent from './HeaderComponent';
 import MapComponent from './MapComponent';
 import AddFilterTagDialogComponent from 'components/dialog/filtertags/AddFilterTagDialogComponent';
 import AddTagDialogComponent from 'components/dialog/addtags/AddTagDialogComponent';
+import $ from 'jquery';
 
 class AppComponent extends React.Component {
 
@@ -16,12 +17,43 @@ class AppComponent extends React.Component {
       displayAddDialog: false,
     }
     this.showAddDialog = this.showAddDialog.bind(this);
+    this.handleAddDialogSubmit = this.handleAddDialogSubmit.bind(this);
   }
 
   showAddDialog(lat, long) {
     this.setState({displayAddDialog: true});
-    console.log(lat);
-    console.log(long);
+    this.lat = lat;
+    this.long = long;
+  }
+
+  handleAddDialogSubmit(category, email, subcategory, message) {
+    this.addMessageAPICall(category, this.lat, this.long, email, subcategory, message);
+    this.setState({displayAddDialog: false});
+  }
+
+  addMessageAPICall(cat,lat,longitude,email,subCat = "",msg = "")
+  {
+    $.ajax({
+      type:"POST",
+      url: "http://10.86.113.27:8010/add_msg",
+      data : {
+        category: cat,
+        sub_cat: subCat,
+        email: email,
+        msg: msg ,
+        lat: lat,
+        longitude: longitude
+      },
+      success: function(data){
+        console.log("Successful addMsg");
+        console.log(data);
+      },
+      error: function(err){
+        console.log("Error addMsg ");
+        console.log(err);
+      }
+
+    });
   }
 
   render() {
@@ -29,6 +61,7 @@ class AppComponent extends React.Component {
       <div class = "main-component">
       {(  this.state.displayAddDialog) ? <AddTagDialogComponent
           cancelShow = {() => {this.setState({displayAddDialog: false});}}
+          onSubmit = {this.handleAddDialogSubmit}
         />: ''}
       {(  this.state.displayFilterDialog) ? <AddFilterTagDialogComponent
           cancelShow = {() => {this.setState({displayFilterDialog: false});}}
