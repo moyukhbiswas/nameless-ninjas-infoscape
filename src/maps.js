@@ -1,115 +1,413 @@
 var map;
 function initialize() {
+   
+   // socket.connect('http://10.86.113.27:8010', { autoConnect: true})
+  var getInfo = function()
+  {
+    $.ajax({
+      type:"GET",
+      url: "http://10.86.113.27:8010/get_info",
+      cache: false,
+      // dataType: "jsonp",
+      success: function(html){
+        // console.log("Success");
+        // console.log(JSON.parse(html));
+        data = JSON.parse(html);
+        // console.log(data['safety']);
+      },
+      error: function(err){
+        // console.log("Error getting data");
+        // console.log(err);
+      }
+    
+    });
+  };
 
-  // AJAX CALL
 
-  // $.ajax({
-  //   type:"GET",
-  //   url: "http://10.86.113.27:8010/get_info",
-  //   cache: false,
-  //   dataType: 'jsonp',
-  //   success: function(string){
-  //     var obj = JSON.parse(string);
-  //     console.log("JSON obj", obj);
-  //   }
-  // });
 
-  var latLng = new google.maps.LatLng(17.4024771, 78.4878983);
+  var userLogin = function(email,pwd)
+  {
+    $.ajax({
+      type:"POST",
+      url: "http://10.86.113.27:8010/login",
+      data : {
+        email: email,
+        pwd: pwd
+      },
+      success: function(data){
+        // console.log("Success - Login");
+        // console.log(data);
+      },
+      error: function(err){
+        // console.log("Error - Login ");
+        // console.log(err);
+      }
+    
+    });
+  }
+
+
+
+ var userRegister = function(name,email,pwd)
+  {
+    $.ajax({
+      type:"POST",
+      url: "http://10.86.113.27:8010/register",
+      data : {
+        email: email,
+        pwd: pwd,
+        name:name
+      },
+      success: function(data){
+        // console.log("Successful registration");
+        // console.log(data);
+      },
+      error: function(err){
+        // console.log("Error registration ");
+        // console.log(err);
+      }
+    
+    });
+  }
+
+
+  var addVote = function(id,email,vote)
+  {
+    $.ajax({
+      type:"POST",
+      url: "http://10.86.113.27:8010/add_vote",
+      data : {
+        iD: id,
+        email: email,
+        vote : vote
+      },
+      success: function(data){
+        // console.log("Successful vote");
+        // console.log(data);
+      },
+      error: function(err){
+        // console.log("Error vote ");
+        // console.log(err);
+      }
+    
+    });
+  }
+
+
+  var addMsg = function(cat,lat,longitude,email,subCat = "",msg = "")
+  {
+    $.ajax({
+      type:"POST",
+      url: "http://10.86.113.27:8010/add_msg",
+      data : {
+        category: cat,
+        sub_cat: subCat,
+        email: email,
+        msg: msg ,
+        lat: lat,
+        long: longitude
+      },
+      success: function(data){
+        // console.log("Successful addMsg");
+        // console.log(data);
+      },
+      error: function(err){
+        // console.log("Error addMsg ");
+        // console.log(err);
+      }
+    
+    });
+  }
+
+  // Map Setup
+  var latLng = new google.maps.LatLng(17.4024771, 78.4878983);  
+  var mapOptions = {
+    zoom: 10,
+    center: latLng
+  }
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
 
   // Sample JSON Data
-	var data = [
-		{"entertainment": [
-			{
-				"latlng" : new google.maps.LatLng(17.3968048, 78.3139618),
-				"subcat" : "music",
-				"up" : 5,
-				"down" : 1,
-				"email" : "deepak.sharma.cse12@hotmail.com"
-			},
-			{
-				"latlng" : new google.maps.LatLng(17.4881948, 78.398694),
-				"subcat" : "music",
-				"up" : 8,
-				"down" : 2,
-				"email" : "deepak.sharma.cse12@hotmail.com"
-			}
-		]},
-		{"hazard": [
-			{
-				"latlng" : new google.maps.LatLng(17.4900915, 78.3899578),
-				"subcat" : "waterLogging",
-				"up" : 5,
-				"down" : 1,
-				"email" : "deepak.sharma.cse12@hotmail.com"
-			},
-			{
-				"latlng" : new google.maps.LatLng(17.4973297, 78.3911697),
-				"subcat" : "fire",
-				"up" : 8,
-				"down" : 2,
-				"email" : "deepak.sharma.cse12@hotmail.com"
-			}
-		]},
-	];
+  var data = {
+     "Hazard": {
+        "Radioactivity": {
+           "17.4410614443$78.4976577759": [
+              [
+                 "Uranium found",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Pollution": {
+           "17.3829140573$78.6368751526": [
+              [
+                 "Ahh that smell",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "Events": {
+        "Standup": {
+           "17.4089598229$78.4698486328": [
+              [
+                 "",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Music": {
+           "17.4384411154$78.3638048172": [
+              [
+                 "",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Sports": {
+           "17.4068304342$78.5524177551": [
+              [
+                 "inda vs pak match",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "Offers": {
+        "Food": {
+           "17.4575195239$78.3725166321": [
+              [
+                 "On Street food.",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Lifestyle": {
+           "17.415020255$78.4362030029": [
+              [
+                 "",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Clothes": {
+           "17.5370050088$78.2389640808": [
+              [
+                 "Save Money",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "Safety": {
+        "Unsafe for Women": {
+           "17.5108138395$78.4467601776": [
+              [
+                 "Goons",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "Roads": {
+        "Repair/Construction": {
+           "17.4001554587$78.5609579086": [
+              [
+                 "Metro Work.",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Accident": {
+           "17.4354932004$78.3467459679": [
+              [
+                 "",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ],
+           "17.4354932004$78.3459091187": [
+              [
+                 "Near wipro circle",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Water Logging": {
+           "17.5500991752$78.2065200806": [
+              [
+                 "",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "Crowds": {
+        "Major": {
+           "17.4001554587$78.5609579086": [
+              [
+                 "12345689",
+                 0,
+                 0,
+                 "admin"
+              ],
+              [
+                 "asdfrghj",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Minor": {
+           "17.4338554493$78.4753417969": [
+              [
+                 "Crowd near the indian flag",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     },
+     "PublicServices": {
+        "Delay": {
+           "17.4918228791$78.2942390442": [
+              [
+                 "Buses are delayed",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ],
+           "17.4446233935$78.3531618118": [
+              [
+                 "Public buses delay",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        },
+        "Strike": {
+           "17.4145288761$78.5220336914": [
+              [
+                 "Telangana strike",
+                 0,
+                 0,
+                 "admin"
+              ]
+           ]
+        }
+     }
+   }
 
-	// Extracting entertainment data out of data object
-  var entertainmentData = data[0].entertainment;
 
-	var mapOptions = {
-		zoom: 10,
-		center: latLng
-	}
+  var subcatImage = {
+    "Accident" : "./pin_icons/accident.png",
+    "Construction" : "./pin_icons/construction.png",
+    "Crowds" : "./pin_icons/crowd.png",
+    "Delay" : "./pin_icons/delay.png",
+    "Electricity" : "./pin_icons/electricity.png",
+    "Events" : "./pin_icons/events.png",
+    "Hazard" : "./pin_icons/hazards.png",
+    "Music" : "./pin_icons/music.png",
+    "Offers" : "./pin_icons/offers.png",
+    "PublicServices" : "./pin_icons/public.png",
+    "Road blocked" : "./pin_icons/road_blocked.png",
+    "Roads" : "./pin_icons/road.png",
+    "Safety" : "./pin_icons/safety.png",
+    "Thief" : "./pin_icons/thief.png"
 
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  };
 
-    // Adding content if clicked
-    var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-        '<div id="bodyContent">'+
-        '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-        'sandstone rock formation in the southern part of the '+
-        'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-        'south west of the nearest large town, Alice Springs; 450&#160;km '+
-        '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-        'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-        'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-        'Aboriginal people of the area. It has many springs, waterholes, '+
-        'rock caves and ancient paintings. Uluru is listed as a World '+
-        'Heritage Site.</p>'+
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-        'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-        '(last visited June 22, 2009).</p>'+
-        '</div>'+
-        '</div>';
+  // global infowindow 
+  var infowindow = new google.maps.InfoWindow();
 
-    // info windows corresponding to the content string
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
+  //markers for the data
+  for(cat in data)
+  {
+    for(subcat in data[cat])
+    {
+      for (latlng in data[cat][subcat])
+      {
+        
+        var latLngArray = data[cat][subcat][latlng];
 
-	// Single Marker
-	var marker = new google.maps.Marker({
-		position: latLng,
-		map: map,
-		title: 'Click to zoom'
-	});
+        var preContentString="";
+        preContentString += "<div style = \"font-family:Helvetica; font-size: 14px;width: 400px; max-height: 200px; overflow-y: auto;\">";
+        preContentString += "<div style =\"font-weight:bold;width: 100%; float: left;margin-top: 3px; margin-bottom:3px; font-size:16px;\">" +  cat + "<\/div>";
+        preContentString += "<div style = \"width: 100%;float: left;\">" + subcat + "<\/div>";
+        preContentString += "<table>";   
 
-	// Adding listener to a single marker
-	marker.addListener('click', function() {
-		// map.setZoom(12);
-		// map.setCenter(marker.getPosition());
-		infowindow.open(map, marker);
-	});
+        var rowString="";
 
-	// Multiple Place markers
-	for (var i=0; i < entertainmentData.length; i++){
-		var marker = new google.maps.Marker({
-			position: entertainmentData[i].latlng,
-			map: map
-		});
-	}
+        var postContentString="";
+        postContentString += "<\/table>";
+        postContentString += "<\/div>";   
+
+        for(var i=0;i<latLngArray.length;i++)
+        { 
+          rowString += "<tr>";
+          rowString += "<td><div style = \"margin-bottom: 5px;font-size: 13px; margin-top: 3px;color: #aaa; width: 250px;float: left;\">" + latLngArray[i][0] + "<\/div>";
+          rowString += "<\/td><td><button style = \"border-radius: 3px;margin-left: 10px;cursor:pointer; color: white;background: #f44336 ; border: none; ;float:right; width: 40px; height: 20px;\">+" + latLngArray[i][1] + "<\/button>";
+          rowString += "<button style = \"border-radius: 3px;margin-left: 10px;cursor:pointer; color: white;background: #f44336 ; border: none; ;float:right; width: 40px; height: 20px;\">-" + latLngArray[i][2] + "<\/button>";
+          rowString += "<\/td>";
+          rowString += "<\/tr>";          
+        }  
+
+        // final contentString
+        var contentString = preContentString + rowString + postContentString;
+
+        // separating the lat lng
+        var temp = latlng.split('$');
+      
+        // putting the marker over the lat lng
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(temp[0], temp[1]),
+          map: map
+        });
+        if (subcat in subcatImage)
+          marker.setIcon(subcatImage[subcat]);
+        else
+          marker.setIcon(subcatImage[cat]);
+
+
+        google.maps.event.addListener(marker,'click', (function(marker,contentString,infowindow){ 
+            return function() {
+                infowindow.setContent(contentString);
+                infowindow.open(map,marker);
+            };
+        })(marker,contentString,infowindow));                   
+      }
+    }
+  }
 
       // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
@@ -166,7 +464,7 @@ function initialize() {
           map.fitBounds(bounds);
 
         });
-
+        
         var prevMarker = null;
 
         // This event listener calls addMarker() when the map is clicked.
@@ -175,32 +473,33 @@ function initialize() {
         });
 
       var geocoder = new google.maps.Geocoder;
-
+  
 
       // Adds a marker to the map.
       function addMarker(location, map) {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
         if(prevMarker == null){
-	        var marker = new google.maps.Marker({
-	          position: location,
-	          map: map
-	        });
-	        geocodeLatLng(location, map, marker);
-	        prevMarker = marker;
-    	  }
-      	else{
-      		prevMarker.setMap(null);
-      		prevMarker = null;
-      	}
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map
+          });
+          geocodeLatLng(location, map, marker);
+          prevMarker = marker;
+      }
+      else{
+        prevMarker.setMap(null);
+        prevMarker = null;
+      }
       }
 
+      // geocode the marker location to information
       function geocodeLatLng(location, map, marker)
       {
- 	     var latlng = {lat:location.lat(), lng : location.lng()};
- 	     geocoder.geocode({'location' : latlng}, function(results, status){
- 	     	if(status == google.maps.GeocoderStatus.OK){
- 	     		if(results[1]){
+       var latlng = {lat:location.lat(), lng : location.lng()};
+       geocoder.geocode({'location' : latlng}, function(results, status){
+        if(status == google.maps.GeocoderStatus.OK){
+          if(results[1]){
               var length = results[1].address_components.length;
               var lat = location.lat().toFixed(3);
               var lng = location.lng().toFixed(3);
@@ -212,15 +511,15 @@ function initialize() {
               contentString += "<div style = \"width: 200px;float: left;\"> " + state + "<\/div>";
               contentString += "<div style = \"font-size: 12px; margin-top: 3px;color: #aaa; width: 120px;float: left;\"> " + lat + "," + lng + "<\/div>";
               contentString += "";
+              // contentString += "<button style = \"margin-top: -35px;cursor:pointer; color: white;background: #f44336 ; border: none; border-radius: 30px;float:right; width: 50px; height: 50px;\">+<\/button>";
               contentString += "<button onClick = \"window.showAddDialog("+location.lat()+","+location.lng()+")\" style = \"margin-top: -35px;cursor:pointer; color: white;background: #f44336 ; border: none; border-radius: 30px;float:right; width: 50px; height: 50px;\">+<\/button>";
               contentString += "<\/div>";
               infowindow.setContent(contentString);
-              infowindow.open(map, marker);
-
- 	     		}
- 	     	}
- 	     })
-      }
+              infowindow.open(map, marker);             
+          }
+        }
+       })       
+      }         
 
 
  // Adding circle
