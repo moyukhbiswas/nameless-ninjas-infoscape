@@ -28,6 +28,10 @@ class AppComponent extends React.Component {
 
   handleAddDialogSubmit(category, email, subcategory, message) {
     this.addMessageAPICall(category, this.lat, this.long, email, subcategory, message);
+    
+    // function from maps.js
+    window.addNewPin(category, this.lat, this.long, email, subcategory, message);
+    
     this.setState({displayAddDialog: false});
   }
 

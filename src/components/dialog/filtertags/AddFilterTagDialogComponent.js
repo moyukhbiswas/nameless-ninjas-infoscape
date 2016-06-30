@@ -20,11 +20,9 @@ class AddFilterTagDialogComponent extends React.Component {
       }
     }
 
-    //HERE WE CALL THE WINDOW METHOD.
-    //window.something(categories)
-    //INSTEAD WE PRINT
+    // write function here
+    window.filterPins(categories);
 
-    console.log(categories);
     this.props.cancelShow();
   }
 
@@ -34,8 +32,8 @@ class AddFilterTagDialogComponent extends React.Component {
         <div className = "addfilterdialog-window">
           <div className = "addfilterdialog-title"> Select the tags you want to filter with
           <br/>
-          <SelectableButtonComponent name = "Crowd" ref = "button1" icon = "crowd-icon" buttontext="Crowd" />
-          <SelectableButtonComponent name = "Hazards" ref = "button2" icon = "hazard-icon" buttontext="Hazards" />
+          <SelectableButtonComponent name = "Crowds" ref = "button1" icon = "crowd-icon" buttontext="Crowds" />
+          <SelectableButtonComponent name = "Hazard" ref = "button2" icon = "hazard-icon" buttontext="Hazard" />
           <SelectableButtonComponent name = "Events" ref = "button3" icon = "events-icon" buttontext="Events" />
           <br/>
           <SelectableButtonComponent name = "Offers" ref = "button4" icon = "offers-icon" buttontext="Offers" />
