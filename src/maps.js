@@ -1,6 +1,6 @@
 var map;
 function initialize() {
-	 
+
   // AJAX CALL
 
   // $.ajax({
@@ -32,7 +32,7 @@ function initialize() {
 				"up" : 8,
 				"down" : 2,
 				"email" : "deepak.sharma.cse12@hotmail.com"
-			}			
+			}
 		]},
 		{"hazard": [
 			{
@@ -48,8 +48,8 @@ function initialize() {
 				"up" : 8,
 				"down" : 2,
 				"email" : "deepak.sharma.cse12@hotmail.com"
-			}			
-		]},		
+			}
+		]},
 	];
 
 	// Extracting entertainment data out of data object
@@ -94,21 +94,21 @@ function initialize() {
 		position: latLng,
 		map: map,
 		title: 'Click to zoom'
-	});  
+	});
 
 	// Adding listener to a single marker
 	marker.addListener('click', function() {
 		// map.setZoom(12);
 		// map.setCenter(marker.getPosition());
 		infowindow.open(map, marker);
-	});	
+	});
 
 	// Multiple Place markers
 	for (var i=0; i < entertainmentData.length; i++){
 		var marker = new google.maps.Marker({
 			position: entertainmentData[i].latlng,
 			map: map
-		});  			
+		});
 	}
 
       // Create the search box and link it to the UI element.
@@ -166,7 +166,7 @@ function initialize() {
           map.fitBounds(bounds);
 
         });
-        
+
         var prevMarker = null;
 
         // This event listener calls addMarker() when the map is clicked.
@@ -175,7 +175,7 @@ function initialize() {
         });
 
       var geocoder = new google.maps.Geocoder;
-  
+
 
       // Adds a marker to the map.
       function addMarker(location, map) {
@@ -188,7 +188,7 @@ function initialize() {
 	        });
 	        geocodeLatLng(location, map, marker);
 	        prevMarker = marker;
-    	  }  
+    	  }
       	else{
       		prevMarker.setMap(null);
       		prevMarker = null;
@@ -212,15 +212,15 @@ function initialize() {
               contentString += "<div style = \"width: 200px;float: left;\"> " + state + "<\/div>";
               contentString += "<div style = \"font-size: 12px; margin-top: 3px;color: #aaa; width: 120px;float: left;\"> " + lat + "," + lng + "<\/div>";
               contentString += "";
-              contentString += "<button style = \"margin-top: -35px;cursor:pointer; color: white;background: #f44336 ; border: none; border-radius: 30px;float:right; width: 50px; height: 50px;\">+<\/button>";
+              contentString += "<button onClick = \"window.showAddDialog("+location.lat()+","+location.lng()+")\" style = \"margin-top: -35px;cursor:pointer; color: white;background: #f44336 ; border: none; border-radius: 30px;float:right; width: 50px; height: 50px;\">+<\/button>";
               contentString += "<\/div>";
               infowindow.setContent(contentString);
-              infowindow.open(map, marker);                       
-  			
+              infowindow.open(map, marker);
+
  	     		}
  	     	}
- 	     })     	
-      }         
+ 	     })
+      }
 
 
  // Adding circle

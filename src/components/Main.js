@@ -13,8 +13,15 @@ class AppComponent extends React.Component {
     super(props);
     this.state = {
       displayFilterDialog: false,
-      displayAddDialog: true,
+      displayAddDialog: false,
     }
+    this.showAddDialog = this.showAddDialog.bind(this);
+  }
+
+  showAddDialog(lat, long) {
+    this.setState({displayAddDialog: true});
+    console.log(lat);
+    console.log(long);
   }
 
   render() {
