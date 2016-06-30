@@ -38,10 +38,10 @@ for event in events:
     geocode_result = gmaps.geocode(addr)
     approx_loc = geocode_result[0]['geometry']['location']
     result = [approx_loc['lat'], approx_loc['lng']]
-    ev.append(result)
+    ev.append(str(result))
     events_list.append(ev)
 #    print result
 #    print ev
 
-print events_list
-
+for event in events_list:
+    print str(event)
