@@ -1,0 +1,110 @@
+.selectablebutton-component {
+  width: 90px;
+  height: 90px;
+  margin-left: 10px;
+  margin-top:10px;
+  border: 1px solid #006598;
+  display: inline-block;
+  text-align: center;
+  color: #006598;
+  background: none;
+  border-radius: 3px;
+
+  &:hover {
+    background: #006598;
+    color:white;
+    transition-duration: 0.5s;
+  }
+}
+
+
+.selectablebutton-component-active {
+  background: #006598;
+  color:white;
+}
+
+.selectable-button-icon {
+  font-size: 30px;
+  font-family: 'FontAwesome';
+}
+.hazard-icon {
+  &::after {
+    content: '\f071';
+  }
+}
+
+.public-services-icon {
+  &::after {
+    content: '\f239';
+  }
+}
+
+.crowd-icon {
+  &::after {
+    content: '\f0c0 ';
+  }
+}
+
+.safety-icon {
+  &::after {
+    content: '\f0fe';
+  }
+}
+
+.events-icon {
+  &::after {
+    content: '\f118';
+  }
+}
+
+.roads-icon {
+  &::after {
+    content: '\f018';
+  }
+}
+
+.offers-icon {
+  &::after {
+    content:'\f005';
+  }
+}
+.selectable-button-text {
+  font-family: Arial;
+  font-size: 12px;
+  height: 25px;
+}
+
+.addfilterdialog-submit {
+  background: #006598;
+  color: white;
+  border: solid;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-style: solid;
+  border-width: thin;
+  margin-top: 20px;
+
+  &:hover {
+    background: rgba(0,101,152,0.8);
+    transition-duration: 0.5s;
+  }
+}
+
+.addfilterdialog-cancel {
+  background: #555;
+  margin-left: 10px;
+  color: white;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 20px;
+
+  &:hover {
+    background: #999;
+    transition-duration: 0.5s;
+  }
+}
