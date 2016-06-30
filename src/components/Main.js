@@ -13,12 +13,8 @@ class AppComponent extends React.Component {
     super(props);
     this.state = {
       displayFilterDialog: false,
-      displayAddDialog: true,
+      displayAddDialog: false,
     }
-  }
-
-  componentDidMount() {
-    console.log('Adding Display Dialog');
   }
 
   render() {
@@ -31,7 +27,6 @@ class AppComponent extends React.Component {
           cancelShow = {() => {this.setState({displayFilterDialog: false});}}
         />: ''}
       <HeaderComponent onFilterClick = {() => {this.setState({displayFilterDialog: true})}}/>
-      <MapComponent />
       </div>
     );
   }

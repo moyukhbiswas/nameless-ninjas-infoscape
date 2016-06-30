@@ -4,6 +4,4 @@ import ReactDOM from 'react-dom';
 import App from './components/Main';
 
 // Render the main component into the dom
-let infoscapeapp = ReactDOM.render(<App />, document.getElementById('app'));
-
-window.infoscape = infoscapeapp.printSomething;
+ReactDOM.render(<App />, document.getElementById('app'));
