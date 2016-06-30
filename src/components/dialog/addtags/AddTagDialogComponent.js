@@ -16,13 +16,13 @@ class AddTagDialogComponent extends React.Component {
     };
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
     this.subcategories = [
-        ['Heavy Crowd', 'Medium Crowd', 'Low Crowd'],
-        ['Waterlogging', 'Pollution', 'Others'],
-        ['Waterlogging', 'Pollution', 'Others'],
-        ['Waterlogging', 'Pollution', 'Others'],
-        ['Waterlogging', 'Pollution', 'Others'],
-        ['Waterlogging', 'Pollution', 'Others'],
-        ['Waterlogging', 'Pollution', 'Others'],
+        ['Major', 'Minor'],
+        ['Fire', 'Pollution', 'Radioactivity'],
+        ['Music', 'Theatre', 'Standup', 'Sports', 'Educational' ],
+        ['Food', 'Clothes', 'Fair', 'Lifestyle', 'Electronics', 'Other' ],
+        ['Delay', 'Strike', 'Electricity', 'Other'],
+        ['Blockade', 'Traffic Jam', 'Repair/Construction', 'Accident', 'Water Logging','Other' ],
+        ['Unsafe for Women', 'Mugging Prone', 'Other' ],
     ];
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -60,7 +60,7 @@ class AddTagDialogComponent extends React.Component {
           <SelectableRadioButtonComponent index = {2} onClick= {this.clickHandler} ref = "button3" name = "Events" icon = "events-icon" buttontext="Events" />
           <br/>
           <SelectableRadioButtonComponent index = {3} onClick= {this.clickHandler} ref = "button4" name = "Offers" icon = "offers-icon" buttontext="Offers" />
-          <SelectableRadioButtonComponent index = {4} onClick= {this.clickHandler} ref = "button5" name = "Public Services" icon = "public-services-icon" buttontext="Public Services" />
+          <SelectableRadioButtonComponent index = {4} onClick= {this.clickHandler} ref = "button5" name = "PublicServices" icon = "public-services-icon" buttontext="Public Services" />
           <SelectableRadioButtonComponent index = {5} onClick= {this.clickHandler} ref = "button6" name = "Roads" icon = "roads-icon" buttontext="Roads" />
           <br/>
           <SelectableRadioButtonComponent index = {6} onClick= {this.clickHandler} ref = "button7" name = "Safety" icon = "safety-icon" buttontext="Safety" />
