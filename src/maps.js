@@ -188,11 +188,11 @@ function initialize() {
 	        });
 	        geocodeLatLng(location, map, marker);
 	        prevMarker = marker;
-    	}
-    	else{
-    		prevMarker.setMap(null);
-    		prevMarker = null;
-    	}
+    	  }  
+      	else{
+      		prevMarker.setMap(null);
+      		prevMarker = null;
+      	}
       }
 
       function geocodeLatLng(location, map, marker)
@@ -201,8 +201,22 @@ function initialize() {
  	     geocoder.geocode({'location' : latlng}, function(results, status){
  	     	if(status == google.maps.GeocoderStatus.OK){
  	     		if(results[1]){
-		          infowindow.setContent(results[1].formatted_address);
-		          infowindow.open(map, marker); 	     			
+              var length = results[1].address_components.length;
+              var lat = location.lat().toFixed(3);
+              var lng = location.lng().toFixed(3);
+              var name = results[1].address_components[1].long_name;
+              var state = results[1].address_components[length-3].long_name;
+              var contentString="";
+              contentString += "<div style = \"font-family:Arial; font-size: 14px;width: 200px; height: 60px;\">";
+              contentString += "<div style =\"font-weight:bold;width: 200px; float: left;margin-top: 3px; margin-bottom:3px; font-size:16px;\"> "+ name + "<\/div>";
+              contentString += "<div style = \"width: 200px;float: left;\"> " + state + "<\/div>";
+              contentString += "<div style = \"font-size: 12px; margin-top: 3px;color: #aaa; width: 120px;float: left;\"> " + lat + "," + lng + "<\/div>";
+              contentString += "";
+              contentString += "<button style = \"margin-top: -35px;cursor:pointer; color: white;background: #f44336 ; border: none; border-radius: 30px;float:right; width: 50px; height: 50px;\">+<\/button>";
+              contentString += "<\/div>";
+              infowindow.setContent(contentString);
+              infowindow.open(map, marker);                       
+  			
  	     		}
  	     	}
  	     })     	
