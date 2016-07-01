@@ -123,6 +123,138 @@ function initialize() {
     }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+  var loadNavigations =  function(){
+        var origin_place_id = null;
+        var destination_place_id = null;
+        var travel_mode = google.maps.TravelMode.WALKING;
+
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setMap(map);
+
+        var origin_input = document.getElementById('origin-input');
+        var destination_input = document.getElementById('destination-input');
+        var modes = document.getElementById('mode-selector');
+
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(modes);
+
+        var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+        origin_autocomplete.bindTo('bounds', map);
+        var destination_autocomplete =
+            new google.maps.places.Autocomplete(destination_input);
+        destination_autocomplete.bindTo('bounds', map);
+
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, mode) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            travel_mode = mode;
+          });
+        }
+        setupClickListener('changemode-walking', google.maps.TravelMode.WALKING);
+        setupClickListener('changemode-transit', google.maps.TravelMode.TRANSIT);
+        setupClickListener('changemode-driving', google.maps.TravelMode.DRIVING);
+
+        function expandViewportToFitPlace(map, place) {
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+        }
+
+        origin_autocomplete.addListener('place_changed', function() {
+          var place = origin_autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+          expandViewportToFitPlace(map, place);
+
+          // If the place has a geometry, store its place ID and route if we have
+          // the other place ID
+          origin_place_id = place.place_id;
+          route(origin_place_id, destination_place_id, travel_mode,
+                directionsService, directionsDisplay);
+        });
+
+        destination_autocomplete.addListener('place_changed', function() {
+          var place = destination_autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+          expandViewportToFitPlace(map, place);
+
+          // If the place has a geometry, store its place ID and route if we have
+          // the other place ID
+          destination_place_id = place.place_id;
+          route(origin_place_id, destination_place_id, travel_mode,
+                directionsService, directionsDisplay);
+        });
+
+        function route(origin_place_id, destination_place_id, travel_mode,
+                       directionsService, directionsDisplay) {
+          if (!origin_place_id || !destination_place_id) {
+            return;
+          }
+          var counter = 0;
+          directionsService.route({
+            origin: {'placeId': origin_place_id},
+            destination: {'placeId': destination_place_id},
+            travelMode: travel_mode
+          }, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+              var pointsArray = [];
+              console.log(response.routes);
+              for (var route in response.routes) {
+                
+                  for (var leg in response.routes[route].legs) {
+                    console.log(leg);
+                      for (var step in response.routes[route].legs[leg].steps) {
+                          for (var latlng in response.routes[route].legs[leg].steps[step].path) {
+                              // if(counter%20==0)
+                                pointsArray.push(response.routes[route].legs[leg].steps[step].path[latlng]);
+                              counter++;
+                              console.log(counter);
+                          }
+                      }
+                  }
+              }
+              var marker = new google.maps.Marker({
+                position: pointsArray[0],
+                map: map,
+                title: 'Hello World!'
+              });
+
+              directionsDisplay.setDirections(response);
+             
+              var i = 1;                     //  set your counter to 1
+
+              function myLoop () {           //  create a loop function
+                 setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+                    marker.setPosition(pointsArray[i]);          //  your code here
+                    i++;                     //  increment the counter
+                    if (i < pointsArray.length) {            //  if the counter < 10, call the loop function
+                       myLoop();             //  ..  again which will trigger another 
+                    }                        //  ..  setTimeout()
+                 }, 100)
+              }
+
+              myLoop(); 
+
+              console.log("points yaa");
+              console.log(pointsArray);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
+        }
+      }
 
     // Sample JSON Data
     var staticData = {
@@ -452,61 +584,61 @@ function initialize() {
       });
     }    
 
-        // Create the search box and link it to the UI element.
-          var input = document.getElementById('pac-input');
-          var searchBox = new google.maps.places.SearchBox(input);
-          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-          // Bias the SearchBox results towards current map's viewport.
-          map.addListener('bounds_changed', function() {
-            searchBox.setBounds(map.getBounds());
-          });
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
 
-          var markers = [];
-          // Listen for the event fired when the user selects a prediction and retrieve
-          // more details for that place.
-          searchBox.addListener('places_changed', function() {
-            var places = searchBox.getPlaces();
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
 
-            if (places.length == 0) {
-              return;
-            }
+      if (places.length == 0) {
+        return;
+      }
 
-            // Clear out the old markers.
-            markers.forEach(function(marker) {
-              marker.setMap(null);
-            });
-            markers = [];
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
 
-            // For each place, get the icon, name and location.
-            var bounds = new google.maps.LatLngBounds();
-            places.forEach(function(place) {
-              var icon = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-              };
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
 
-              // Create a marker for each place.
-              markers.push(new google.maps.Marker({
-                map: map,
-                icon: icon,
-                title: place.name,
-                position: place.geometry.location
-              }));
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
 
-              if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-              } else {
-                bounds.extend(place.geometry.location);
-              }
-            });
-            map.fitBounds(bounds);
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
 
-          });
+    });
           
           var prevMarker = null;
 
@@ -565,7 +697,7 @@ function initialize() {
          })       
         }     
 
-
+    loadNavigations();
 
    // Adding circle
 
