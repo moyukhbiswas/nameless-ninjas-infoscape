@@ -14,10 +14,13 @@ class HeaderComponent extends React.Component {
         <div className = "logo">Infoscape</div>
         <div className="header-options dropdown">
           <button className="header-options-button dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {(window.innerWidth >=480) ? 'See posts from':''}
+            {(window.innerWidth >=480) ? 'My Profile Settings':''}
             <span className="caret"></span>
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenu1" style = {{'margin-left': (window.innerWidth >=480) ? '0px':'-150px'}}>
+            <li><div className = "profile-username">{window.profileusername}</div></li>
+            <li><div className = "profile-useremail">{window.profileemail}</div></li>
+            <li role="separator" className="divider"></li>
             <li><a href="#">Friends only</a></li>
             <li><a href="#">Trusted sources only</a></li>
             <li><a href="#">Everyone on the web</a></li>
