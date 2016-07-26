@@ -39,7 +39,7 @@ class AppComponent extends React.Component {
   {
     $.ajax({
       type:"POST",
-      url: "http://10.86.113.27:8011/add_msg",
+      url: "/add_msg",
       data : {
         category: cat,
         sub_cat: subCat,

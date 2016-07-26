@@ -5,7 +5,7 @@ function initialize() {
 
   // $.ajax({
   //   type:"GET",
-  //   url: "http://10.86.113.27:8010/get_info",
+  //   url: "http://10.171.45.57:8010/get_info",
   //   cache: false,
   //   dataType: 'jsonp',
   //   success: function(string){
