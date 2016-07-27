@@ -2,12 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>React Webpack Template Title</title>
+  <title>Infoscape</title>
   <link rel="stylesheet" href="./mapsStyles.css">
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA0PGl5CPAG8CtCmeJR6vVu5gMAlA1EccQ&libraries=places,drawing"></script>
-  <!-- <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script> -->
   <script src="./maps.js"></script>
-  <!-- <script src="./bing.js"></script> -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,8 +22,27 @@
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="/assets/app.js"></script>
-
+  <script>
+  function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length,c.length);
+          }
+      }
+      return "";
+  }
+  console.log('COOKIE HERE!');
+  console.log(document.cookie);
+  window.profileusername = getCookie('name');
+  window.profileemail = getCookie('email') || "admin";
+  </script>
+  <script type="text/javascript" src="./assets/app.js"></script>
 
 
   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -36,7 +53,10 @@
       placeholder="Enter a destination location">
 
   <input id="radius-input" class="controls" type="text"
-      placeholder="Enter Radius (in meters)">
+      placeholder="Enter Radius (in meters)" onkeypress='return event.charCode >= 48 && event.charCode <= 57' >
+
+  <input id="number-pins-input" class="controls" type="hidden"
+      placeholder="Enter No. of pins" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
 
   <div id="mode-selector" class="controls">
     <input type="radio" name="type" id="changemode-walking" checked="checked">
@@ -48,15 +68,16 @@
     <input type="radio" name="type" id="changemode-driving">
     <label for="changemode-driving">Driving</label>
   </div>
-  
+
+  <div id="navigation-through-pins-selector" class="controls">
+    <input type="radio" name="typePath" id="changemode-default-path" checked="checked">
+    <label for="changemode-default-pins">Default Path</label>
+
+    <input type="radio" name="typePath" id="changemode-suggest-path">
+    <label for="changemode-via-pins">Suggest Through Pins</label>
+  </div>
+
   <div id="map-canvas"></div>
-  <!-- <div id="parentDiv"> -->
-    <!-- <div id="bing-map-canvas" style="float:left;width:1500px"></div>
-    
-    <div id='directionsInputContainer' style="margin-left:1500px"></div>
-     -->
-     <!-- <div id='printoutPanel' style="margin-left:1500px"></div> -->
-  <!-- </div> -->
 </body>
 
 
